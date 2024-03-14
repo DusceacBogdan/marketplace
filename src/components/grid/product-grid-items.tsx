@@ -1,7 +1,7 @@
 import { Product } from "@prisma/client";
 import Link from "next/link";
-import Grid from "./grid";
-import { GridTileImage } from "./grid/tile";
+import Grid from ".";
+import { GridTileImage } from "./tile";
 
 export default function ProductGridItems({
   products,

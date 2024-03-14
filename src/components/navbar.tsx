@@ -7,7 +7,6 @@ import MenuButton from "./menu-button";
 import Container from "./container";
 import { ThemeToggle } from "./ui/toggle-theme";
 import Search from "./search";
-import { Icons } from "./icons";
 import Image from "next/image";
 
 type Props = {};
