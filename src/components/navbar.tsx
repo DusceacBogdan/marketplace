@@ -2,12 +2,13 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { ShoppingCart } from "lucide-react";
+import { Plus, ShoppingCart } from "lucide-react";
 import MenuButton from "./menu-button";
 import Container from "./container";
 import { ThemeToggle } from "./ui/toggle-theme";
 import Search from "./search";
 import Image from "next/image";
+import { Button } from "./ui/button";
 
 type Props = {};
 
@@ -27,42 +28,13 @@ const routes = [
 ];
 
 const Navbar = () => {
-  const [yValue, setYValue] = useState(0);
-  const [toHide, setToHide] = useState(false);
-
-  // useEffect(() => {
-  //   const showHeaderOnScrollUp = () => {
-  //     if (yValue >= window.scrollY) {
-  //       setToHide(false);
-  //     } else {
-  //       setToHide(true);
-  //     }
-  //     setYValue(window.scrollY);
-  //   };
-
-  //   window.addEventListener("scroll", showHeaderOnScrollUp);
-
-  //   return () => {
-  //     window.removeEventListener("scroll", showHeaderOnScrollUp);
-  //   };
-  // }, [yValue]);
-
   return (
-    <div
-      className={
-        "fixed top-0 left-0 right-0 flex py-1 px-4 border-b z-[1] bg-background/80 backdrop-blur-md " +
-        (toHide && " py-0 h-0 hidden ")
-      }
-    >
+    <div className="fixed top-0 left-0 right-0 flex py-1 px-4 border-b z-[1] bg-background/80 backdrop-blur-md">
       <Container>
         <div className="px-6 lg:px-8 flex h-10 sm:h-12 md:h-14 items-center justify-between w-full">
-          <div className="flex space-x-2">
+          <div className="flex space-x-2 pr-10">
             <MenuButton routes={routes} />
-            {/* <Link href="/" className="mr-6 flex items-center space-x-2">
-              <Icons.logo className="h-6 w-6" />
-              <span className="hidden font-bold sm:inline-block">SUN-CAPY</span>
-            </Link> */}
-            <Link href="/" className="mr-6 flex items-center space-x-2">
+            <Link href="/home" className="mr-6 flex items-center space-x-2">
               <Image
                 src={"/capy3.png"}
                 alt="capy"
@@ -72,18 +44,24 @@ const Navbar = () => {
               />
               <span className="hidden font-bold sm:inline-block">SUN-CAPY</span>
             </Link>
-            {/* <Link href="/">
-              <h1 className="text-xl font-bold hidden sm:flex">E-STORE</h1>
-            </Link> */}
           </div>
           <div>
             <Search />
           </div>
-          <div className=" flex items-center  space-x-4  md:space-x-8 lg:space-x-10 text-lg ">
+          <div className=" flex items-center  space-x-4  md:space-x-6 lg:space-x-8 text-lg ">
+            <Link href={"/create"}>
+              <Button variant="ghost" size="icon">
+                <Plus className="h-[1.2rem] w-[1.2rem] " />
+
+                <span className="sr-only">Add Product</span>
+              </Button>
+            </Link>
             <ThemeToggle />
-            <Link href={"/"}>
-              <ShoppingCart className="h-6 w-6" />
-              <span className="sr-only">Shopping Cart</span>
+            <Link href={"/home"}>
+              <Button variant="ghost" size="icon">
+                <ShoppingCart className="h-6 w-6" />
+                <span className="sr-only">Shopping Cart</span>
+              </Button>
             </Link>
           </div>
           {/* <nav className=" flex items-center  space-x-4  md:space-x-8 lg:space-x-10 text-lg">

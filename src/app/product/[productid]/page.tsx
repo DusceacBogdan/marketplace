@@ -1,3 +1,4 @@
+import { ProductDescription } from "@/components/product-description";
 import { getProductById } from "@/lib/data";
 import { notFound } from "next/navigation";
 import { FC } from "react";
@@ -13,7 +14,11 @@ const Page: FC<pageProps> = async ({ params }) => {
   if (!product) {
     notFound();
   }
-  return <div>{product?.description}</div>;
+  return (
+    <div className="pt-20 ">
+      <ProductDescription product={product} />
+    </div>
+  );
 };
 
 export default Page;

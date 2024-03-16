@@ -13,11 +13,19 @@ const nextConfig = {
         hostname: "assets.sunglasshut.com",
         // You can add optional 'port' and 'pathname' properties if needed
       },
+      {
+        protocol: "https",
+        hostname: "utfs.io",
+        // You can add optional 'port' and 'pathname' properties if needed
+      },
     ],
   },
   env: {
     API_URL: process.env.API_URL,
   },
+  redirects: async () => [
+    { source: "/", destination: "/home", permanent: true },
+  ],
 };
 
 export default nextConfig;

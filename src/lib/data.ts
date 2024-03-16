@@ -57,25 +57,7 @@ export async function getNumberOfProducts(query: string) {
   return count;
 }
 
-export async function getTotalPages(query: string, pageLimit: number) {
-  const count = await prisma.product.count({
-    where: {
-      OR: [
-        {
-          title: {
-            contains: query,
-            mode: "insensitive",
-          },
-        },
-        {
-          description: {
-            contains: query,
-            mode: "insensitive",
-          },
-        },
-      ],
-    },
-  });
+export function getTotalPages(count: number, pageLimit: number) {
   return Math.ceil(count / pageLimit);
 }
 
@@ -102,4 +84,15 @@ export async function getProductById(id: string) {
 
     return null;
   }
+}
+
+export async function getAllCategories() {
+  const categories = await prisma.product.findMany({
+    select: {
+      category: true,
+    },
+    distinct: ["category"],
+  });
+  //console.log(categories);
+  return categories.map((category) => category.category);
 }

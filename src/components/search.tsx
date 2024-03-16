@@ -10,10 +10,14 @@ export default function Search() {
   const { replace, push } = useRouter();
 
   const handleSearch = useDebouncedCallback((term) => {
+    if (pathname !== "/home") return;
     const params = new URLSearchParams(searchParams);
+
     if (term !== "") {
       params.set("query", term);
     } else params.delete("query");
+    params.set("page", "1");
+
     replace(`${pathname}?${params.toString()}`); //no history update
   }, 300);
 
@@ -26,6 +30,8 @@ export default function Search() {
     if (search.value !== "") {
       params.set("query", search.value);
     } else params.delete("query");
+    params.set("page", "1");
+
     push(`/?${params.toString()}`); //with history update
   };
 
@@ -35,7 +41,7 @@ export default function Search() {
       onSubmit={onSubmit}
     >
       <input
-        className="peer w-full rounded-lg border bg-white px-4 py-2 text-sm text-black placeholder:text-neutral-500 dark:border-neutral-800 dark:bg-transparent dark:text-white dark:placeholder:text-neutral-400"
+        className="peer w-full rounded-lg border bg-white px-4 py-2 text-sm text-black placeholder:text-transparent sm:placeholder:text-neutral-500 dark:bg-transparent dark:text-white sm:dark:placeholder:text-neutral-400"
         key={searchParams?.get("q")}
         onChange={(e) => handleSearch(e.target.value)}
         type="text"

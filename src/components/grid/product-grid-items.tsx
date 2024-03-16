@@ -2,6 +2,7 @@ import { Product } from "@prisma/client";
 import Link from "next/link";
 import Grid from ".";
 import { GridTileImage } from "./tile";
+// import { Suspense } from "react";
 
 export default function ProductGridItems({
   products,
@@ -11,6 +12,7 @@ export default function ProductGridItems({
   return (
     <>
       {products.map((product) => (
+        // <Suspense key={product.id}>
         <Grid.Item key={product.id} className="animate-fadeIn">
           <Link
             className="relative inline-block h-full w-full"
@@ -28,6 +30,7 @@ export default function ProductGridItems({
             />
           </Link>
         </Grid.Item>
+        // </Suspense>
       ))}
     </>
   );

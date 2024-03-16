@@ -1,9 +1,10 @@
 import Grid from "@/components/grid";
+import { pageLimit } from "@/lib/constants";
 
 export default function Loading() {
   return (
     <Grid className="grid-cols-2 lg:grid-cols-3">
-      {Array(12)
+      {Array(pageLimit)
         .fill(0)
         .map((_, index) => {
           return (
