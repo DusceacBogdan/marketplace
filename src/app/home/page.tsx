@@ -39,8 +39,11 @@ export default async function Home({
               <ProductGridItems products={products} />
             </Grid>
           </Suspense>
+
           <div className="mt-5 flex w-full justify-center">
-            <Pagination totalPages={totalPages} />
+            <Suspense>
+              <Pagination totalPages={totalPages} />
+            </Suspense>
           </div>
         </>
       ) : null}

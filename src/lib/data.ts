@@ -1,5 +1,7 @@
 // import type { Product } from "@prisma/client";
+import { Product } from "@prisma/client";
 import prisma from "./db";
+import { get } from "http";
 
 export async function getAllProducts() {
   const products = await prisma.product.findMany();
@@ -95,4 +97,34 @@ export async function getAllCategories() {
   });
   //console.log(categories);
   return categories.map((category) => category.category);
+}
+
+export async function getRelatedProducts(id: string) {
+  const product = await getProductById(id);
+  if (!product) {
+    return [];
+  }
+  const relatedProducts = await prisma.product.findMany({
+    where: {
+      OR: [
+        {
+          category: product.category,
+          NOT: {
+            id: BigInt(id),
+          },
+        },
+        {
+          description: {
+            contains: product.title,
+            mode: "insensitive",
+          },
+          NOT: {
+            id: BigInt(id),
+          },
+        },
+      ],
+    },
+    take: 12,
+  });
+  return relatedProducts;
 }

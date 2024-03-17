@@ -1,6 +1,7 @@
 import { Product } from "@prisma/client";
 import Price from "./price";
 import Prose from "./prose";
+import { Button } from "./ui/button";
 
 export function ProductDescription({ product }: { product: Product }) {
   return (
@@ -19,7 +20,12 @@ export function ProductDescription({ product }: { product: Product }) {
         />
       ) : null}
 
-      {/* <AddToCart variants={product.variants} availableForSale={product.availableForSale} /> */}
+      <Button
+        className="flex w-full items-center justify-center rounded-full bg-blue-600 p-4 tracking-wide dark:text-white"
+        size="lg"
+      >
+        Add To Cart
+      </Button>
     </>
   );
 }

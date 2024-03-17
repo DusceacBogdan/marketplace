@@ -1,14 +1,13 @@
 "use client";
 import Link from "next/link";
 import { CurrencyDollarIcon } from "@heroicons/react/24/outline";
-import { Product } from "@prisma/client";
 import { createProduct } from "@/lib/actions";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { GlassesIcon, ImagesIcon, PenIcon } from "lucide-react";
 import { Textarea } from "./ui/textarea";
-import { UploadButton, UploadDropzone } from "@/lib/uploadthing";
+import { UploadDropzone } from "@/lib/uploadthing";
 import { ClientUploadedFileData } from "uploadthing/types";
 import {
   Select,
@@ -19,6 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import toast from "react-hot-toast";
 
 export default function Form({ categories }: { categories: string[] }) {
   let files: ClientUploadedFileData<string>[] = [];
@@ -36,6 +36,7 @@ export default function Form({ categories }: { categories: string[] }) {
                 type="text"
                 placeholder="Enter product title"
                 className="peer block pl-10"
+                required
               />
               <GlassesIcon className=" pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500  dark:text-gray-400 peer-focus:text-gray-900 dark:peer-focus:text-gray-200" />
             </div>
@@ -52,6 +53,8 @@ export default function Form({ categories }: { categories: string[] }) {
                 step="0.01"
                 placeholder="Enter USD amount"
                 className="peer block pl-10"
+                min={0}
+                required
               />
               <CurrencyDollarIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 dark:text-gray-400 peer-focus:text-gray-900 dark:peer-focus:text-gray-200" />
             </div>
@@ -66,13 +69,14 @@ export default function Form({ categories }: { categories: string[] }) {
                 id="message"
                 name="description"
                 className="peer block pl-10"
+                required
               />
               <PenIcon className="pointer-events-none absolute left-3 top-[19px] h-[18px] w-[18px] -translate-y-1/2 text-gray-500 dark:text-gray-400 peer-focus:text-gray-900 dark:peer-focus:text-gray-200" />
             </div>
           </div>
           {/* Product categories */}
           <div className="w-full">
-            <Select name={"category"}>
+            <Select name={"category"} required>
               <SelectTrigger>
                 <SelectValue placeholder="Select a category" />
               </SelectTrigger>
@@ -84,11 +88,6 @@ export default function Form({ categories }: { categories: string[] }) {
                       {category}
                     </SelectItem>
                   ))}
-                </SelectGroup>
-                <SelectGroup>
-                  <SelectItem key={"other"} value={"other"}>
-                    Other
-                  </SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>
@@ -113,7 +112,7 @@ export default function Form({ categories }: { categories: string[] }) {
             className="w-full max-h-72 p-2 border-2 border-dashed border-gray-300 dark:border-gray-700 rounded-lg"
             appearance={{
               button:
-                "p-4 bg-primary/80 dark:bg-primary text-white dark:text-secondary rounded-md",
+                "p-4 bg-primary/80 dark:bg-primary text-white dark:text-secondary rounded-md dark:disabled:bg-gray-800 dark:disabled:text-gray-500",
               uploadIcon: "text-primary/80 dark:text-gray-200",
               label: "text-gray-900 dark:text-gray-200",
             }}
@@ -122,11 +121,11 @@ export default function Form({ categories }: { categories: string[] }) {
               // Do something with the response
               // console.log("Files: ", res);
               files = res;
-              alert("Upload Completed");
+              toast.success("Upload Completed");
             }}
             onUploadError={(error: Error) => {
               // Do something with the error.
-              alert(`ERROR! ${error.message}`);
+              toast.error(`ERROR! ${error.message}`);
             }}
           />
         </div>

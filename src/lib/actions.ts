@@ -22,10 +22,12 @@ export async function createProduct(
 
   const images =
     files.length === 0
-      ? [
-          "https://photos.google.com/search/_tra_/photo/AF1QipPETqPU1yWulpLb7GmTpd_gvp9EqWYcWcxfsMUy",
-        ]
+      ? ["https://utfs.io/f/c7e662af-d2ea-48c9-9d25-30097a4a354f-n5b1b0.png"]
       : files.map((file) => file.url as string);
+
+  if (price <= 0) {
+    throw new Error("Price must be a positive number.");
+  }
 
   try {
     await prisma.product.create({
@@ -33,7 +35,7 @@ export async function createProduct(
         title: title,
         description: description,
         price: price,
-        category: category,
+        category: category ?? "Other",
         images: images,
       },
     });
