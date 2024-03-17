@@ -38,13 +38,11 @@ export default async function Home({
             <Grid className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
               <ProductGridItems products={products} />
             </Grid>
-          </Suspense>
 
-          <div className="mt-5 flex w-full justify-center">
-            <Suspense>
+            <div className="mt-5 flex w-full justify-center">
               <Pagination totalPages={totalPages} />
-            </Suspense>
-          </div>
+            </div>
+          </Suspense>
         </>
       ) : null}
     </div>
